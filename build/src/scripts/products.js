@@ -1,17 +1,25 @@
 'use strict';
 
 //GET PRODUCT LIST
+
 function createProductList() {
     fetch(endpoints.products.url).then(function (response) {
         return response.json();
     }).then(function (productsList) {
         var html = '';
         for (var i = 0; i < productsList.length; i++) {
-            html += '\n                    <tr>\n                        <td> ' + productsList[i].id + ' </td>\n                        <td> ' + productsList[i].name + ' </td>\n                        <td class="center"> $' + productsList[i].price + ' </td>\n                        <td class="center"> ' + productsList[i].groupId + ' </td>\n                    </tr>\n                ';
+            html += '\n                    <tr>';
+            html += '\n                        <td> ' + productsList[i].id + ' </td>';
+            html += '\n                        <td> ' + productsList[i].name + ' </td>';
+            html += '\n                        <td class="center"> $' + productsList[i].price + ' </td>';
+            html += '\n                        <td class="center"> ' + productsList[i].groupId + ' </td>';
+            html += '\n                    </tr>';
+            html += '\n                ';
         }
         $("#products-list").append(html);
     });
 }
+
 createProductList();
 
 //CREATE NEW PRODUCT
@@ -23,9 +31,7 @@ function createProduct(data) {
         },
         body: JSON.stringify(data)
     };
-    return fetch(endpoints.products.url, options).then(function (response) {
-        return response.json;
-    });
+    return fetch(endpoints.products.url, options);
 }
 
 document.getElementById("add-product").addEventListener('click', function () {
@@ -33,22 +39,26 @@ document.getElementById("add-product").addEventListener('click', function () {
     var addProductDescription = document.getElementById('description').value;
     var addProductPrice = document.getElementById('price').value;
     var addProductGroup = document.getElementById('group').value;
-    createProduct({ name: addProductName, description: addProductDescription, price: addProductPrice, groupId: addProductGroup });
-    location.reload();
+    createProduct({
+        name: addProductName,
+        description: addProductDescription,
+        price: addProductPrice,
+        groupId: addProductGroup
+    }).then(function () {
+        location.reload();
+    });
 });
 
 //EDIT PRODUCT DATA
 function editProduct(data) {
     var options = {
-        method: 'PATCH',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     };
-    return fetch(endpoints.products.url + '/' + data.id, options).then(function (response) {
-        return response.json;
-    });
+    return fetch(endpoints.products.url, options);
 }
 
 document.getElementById("edit-product").addEventListener('click', function () {
@@ -57,27 +67,25 @@ document.getElementById("edit-product").addEventListener('click', function () {
     var editProductDescription = document.getElementById('edit-description').value;
     var editProductPrice = document.getElementById('edit-price').value;
     var editProductGroup = document.getElementById('edit-group').value;
-    editProduct({ id: editProductId, name: editProductName, description: editProductDescription, price: editProductPrice, groupId: editProductGroup });
-    location.reload();
+    editProduct({
+        id: editProductId,
+        name: editProductName,
+        description: editProductDescription,
+        price: editProductPrice,
+        groupId: editProductGroup
+    }).then(function () {
+        location.reload();
+    });
 });
 
 //DELETE PRODUCT
-function deleteProduct(data) {
-    console.log(data);
-    var options = {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    };
-    return fetch(endpoints.products.url + '/' + data.id, options).then(function (response) {
-        return response.json;
-    });
+function deleteProduct(id) {
+    return fetch(endpoints.products.url + '/' + id, { method: 'DELETE' });
 }
 
 document.getElementById("delete-product").addEventListener('click', function () {
     var deleteProductId = document.getElementById('delete-id').value;
-    deleteProduct({ id: deleteProductId });
-    location.reload();
+    deleteProduct(deleteProductId).then(function () {
+        location.reload();
+    });
 });

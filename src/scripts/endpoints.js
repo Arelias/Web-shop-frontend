@@ -1,20 +1,22 @@
-const endpoints = {
+'use strict';
+
+var endpoints = {
     cart: {
-        url: 'http://localhost:4000/cart'
+        url: 'http://localhost:8080/v1/carts'
     },
     orders: {
-        url: 'http://localhost:4000/orders'
+        url: 'http://localhost:8080/v1/orders'
     },
     login: {
-        url: 'http://localhost:4000/login'
+        url: 'http://localhost:8080/v1/users'
     },
     products: {
-        url: 'http://localhost:4000/products'
+        url: 'http://localhost:8080/v1/products'
     },
     groups: {
-        url: 'http://localhost:4000/groups'
+        url: 'http://localhost:8080/v1/groups'
     },
     users: {
-        url: 'http://localhost:4000/users'
+        url: 'http://localhost:8080/v1/users'
     }
 };

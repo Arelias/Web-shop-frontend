@@ -1,8 +1,9 @@
 "use strict";
 
 // LOGIN
-var a = document.getElementById("submit-btn");
-if (a !== null) {
+
+var submitButton = document.getElementById("submit-btn");
+if (submitButton !== null) {
     document.getElementById("submit-btn").addEventListener('click', function () {
         var username = document.getElementById('username').value;
         var password = document.getElementById('password').value;
@@ -17,7 +18,7 @@ if (a !== null) {
 }
 
 function checkUserInput(username, password) {
-    fetch(endpoints.login.url).then(function (response) {
+    fetch(endpoints.login.url + '/1').then(function (response) {
         return response.json();
     }).then(function (loginCheck) {
         if (loginCheck.loggedIn === true) {
