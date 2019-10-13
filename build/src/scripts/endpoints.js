@@ -8,7 +8,7 @@ var endpoints = {
         url: 'http://localhost:8080/v1/orders'
     },
     login: {
-        url: 'http://localhost:8080/v1/users'
+        url: 'http://localhost:8080/v1/login'
     },
     products: {
         url: 'http://localhost:8080/v1/products'

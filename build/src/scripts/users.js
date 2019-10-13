@@ -11,6 +11,7 @@ function createUsersList() {
             html += '\n                    <tr>';
             html += '\n                        <td> ' + usersList[i].id + ' </td>';
             html += '\n                        <td> ' + usersList[i].username + ' </td>';
+            html += '\n                        <td> ' + usersList[i].password + ' </td>';
             html += '\n                        <td> ' + usersList[i].userKey + ' </td>';
             html += '\n                        <td class="center"> ' + usersList[i].status + ' </td>';
             html += '\n                    </tr>';
@@ -35,10 +36,12 @@ function createUser(data) {
 
 document.getElementById("add-user").addEventListener('click', function () {
     var addUserName = document.getElementById('name').value;
+    var addUserPassword = document.getElementById('pass').value;
     var addUserStatus = document.getElementById('status').value;
     var addUserKey = document.getElementById('key').value;
     createUser({
         username: addUserName,
+        password: addUserPassword,
         status: addUserStatus,
         userKey: addUserKey
     }).then(function () {
@@ -53,8 +56,6 @@ function blockUser(id) {
 
 document.getElementById("block-user").addEventListener('click', function () {
     var blockUserId = document.getElementById('identify').value;
-    //    var addUserStatus = document.getElementById('user-status').value;
-    //    blockUser({ id: addUserId, "status": addUserStatus });
     blockUser(blockUserId).then(function () {
         location.reload();
     });
@@ -67,5 +68,12 @@ function keyGenerator(id) {
 
 document.getElementById("key-generator").addEventListener('click', function () {
     var keyUserId = document.getElementById('key-id').value;
-    keyGenerator(keyUserId);
+    keyGenerator(keyUserId).then(function(response) {
+        if (response.status === 200) {
+            alert('Klucz został wygenerowany dla użytkownika o id=' + keyUserId);
+        } else {
+            alert('Podczas generowania klucza wystąpił błąd.');
+        }
+        
+    });
 });

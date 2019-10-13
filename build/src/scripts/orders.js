@@ -16,7 +16,7 @@ function createOrdersList() {
             html += '\n                        <td> ' + ordersList[i].productIds + ' </td>';
             html += '\n                        <td class="center"> ' + ordersList[i].status + ' </td>';
             html += '\n                        <td> ' + ordersList[i].deliveryDate + ' </td>';
-            html += '\n                        <td class="center"> ' + ordersList[i].orderValue + ' </td>';
+            html += '\n                        <td class="center"> $' + ordersList[i].orderValue + ' </td>';
             html += '\n                    </tr>';
             html += '\n                ';
         }

@@ -5,20 +5,30 @@
 var submitButton = document.getElementById("submit-btn");
 if (submitButton !== null) {
     document.getElementById("submit-btn").addEventListener('click', function () {
-        var username = document.getElementById('username').value;
-        var password = document.getElementById('password').value;
+        var login = document.getElementById('username').value;
+        var pass = document.getElementById('password').value;
 
-        if (username === "" || password === "") {
+        if (login === "" || pass === "") {
             alert('Uzupełnij login lub hasło');
         } else {
-            checkUserInput(username, password);
+            checkUserInput({
+                username: login,
+                password: pass
+            });
         }
         event.preventDefault();
     });
 }
 
-function checkUserInput(username, password) {
-    fetch(endpoints.login.url + '/1').then(function (response) {
+function checkUserInput(data) {
+    var options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    };
+    fetch(endpoints.login.url, options).then(function (response) {
         return response.json();
     }).then(function (loginCheck) {
         if (loginCheck.loggedIn === true) {
