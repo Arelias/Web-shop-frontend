@@ -1,18 +1,27 @@
 'use strict';
 
 // GET CART PRODUCTS
-function createProductList() {
-    fetch('' + endpoints.cart.url).then(function (response) {
+
+function getCartProducts() {
+    fetch(endpoints.cart.url + '/1/products').then(function (response) {
         return response.json();
     }).then(function (productsList) {
         var html = '';
         for (var i = 0; i < productsList.length; i++) {
-            html += '\n                    <tr>\n                        <th scope="row"> ' + productsList[i].id + ' </th>\n                        <td><img class="card-img-top" src="http://placehold.it/250x250" alt=""></td>\n                        <td> ' + productsList[i].name + ' </td>\n                        <td class="center"><i class="fas fa-times" data-id="' + productsList[i].id + '"></i></td>\n                        <td class="right"> $' + productsList[i].price + ' </td>\n                    </tr>\n                ';
+            html += '\n                    <tr>';
+            html += '\n                        <th scope="row"> ' + productsList[i].id + ' </th>';
+            html += '\n                        <td><img class="card-img-top" src="http://placehold.it/250x250" alt=""></td>';
+            html += '\n                        <td> ' + productsList[i].name + ' </td>';
+            html += '\n                        <td class="center"><i class="fas fa-times" data-id="' + productsList[i].id + '"></i></td>';
+            html += '\n                        <td class="right"> $' + productsList[i].price + ' </td>';
+            html += '\n                    </tr>';
+            html += '\n                ';
         }
         $("#cart").append(html);
     });
 }
-createProductList();
+
+getCartProducts();
 
 //DELETE CART PRODUCTS
 setTimeout(function () {
@@ -20,29 +29,21 @@ setTimeout(function () {
 
     elementsArray.forEach(function (elem) {
         elem.addEventListener("click", function () {
-            var a = this.getAttribute("data-id");
-            deleteOrder({ id: a });
-            location.reload();
+            var productId = this.getAttribute("data-id");
+            deleteProductFromOrder(productId).then(function () {
+                location.reload();
+            });
         });
     });
 }, 500);
 
-function deleteOrder(data) {
-    var options = {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    };
-    return fetch(endpoints.cart.url + '/' + data.id, options).then(function (response) {
-        return response.json;
-    });
+function deleteProductFromOrder(productId) {
+    return fetch(endpoints.cart.url + '/1/products/' + productId, { method: 'DELETE' });
 }
 
 //MAKE ORDER FROM CART
 document.getElementById('add-order').addEventListener("click", function () {
-    fetch(endpoints.cart.url).then(function (response) {
+    fetch(endpoints.cart.url + '1/products').then(function (response) {
         return response.json();
     }).then(function (cartItems) {
         var tab = [];

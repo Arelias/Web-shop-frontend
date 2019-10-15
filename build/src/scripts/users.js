@@ -1,13 +1,21 @@
 'use strict';
 
 //GET USERS LIST
+
 function createUsersList() {
     fetch(endpoints.users.url).then(function (response) {
         return response.json();
     }).then(function (usersList) {
         var html = '';
         for (var i = 0; i < usersList.length; i++) {
-            html += '\n                    <tr>\n                        <td> ' + usersList[i].id + ' </td>\n                        <td> ' + usersList[i].username + ' </td>\n                        <td> ' + usersList[i].userKey + ' </td>\n                        <td class="center"> ' + usersList[i].status + ' </td>\n                    </tr>\n                ';
+            html += '\n                    <tr>';
+            html += '\n                        <td> ' + usersList[i].id + ' </td>';
+            html += '\n                        <td> ' + usersList[i].username + ' </td>';
+            html += '\n                        <td> ' + usersList[i].password + ' </td>';
+            html += '\n                        <td> ' + usersList[i].userKey + ' </td>';
+            html += '\n                        <td class="center"> ' + usersList[i].status + ' </td>';
+            html += '\n                    </tr>';
+            html += '\n                ';
         }
         $("#users-list").append(html);
     });
@@ -23,56 +31,49 @@ function createUser(data) {
         },
         body: JSON.stringify(data)
     };
-    return fetch(endpoints.users.url, options).then(function (response) {
-        return response.json;
-    });
+    return fetch(endpoints.users.url, options);
 }
 
 document.getElementById("add-user").addEventListener('click', function () {
     var addUserName = document.getElementById('name').value;
+    var addUserPassword = document.getElementById('pass').value;
     var addUserStatus = document.getElementById('status').value;
     var addUserKey = document.getElementById('key').value;
-    createUser({ username: addUserName, status: addUserStatus, userKey: addUserKey });
-    location.reload();
+    createUser({
+        username: addUserName,
+        password: addUserPassword,
+        status: addUserStatus,
+        userKey: addUserKey
+    }).then(function () {
+        location.reload();
+    });
 });
 
 //BLOCK USER BY CHANGING STATUS
-function blockUser(data) {
-    var options = {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    };
-    return fetch(endpoints.users.url + '/' + data.id, options).then(function (response) {
-        return response.json;
-    });
+function blockUser(id) {
+    return fetch(endpoints.users.url + '/' + id, { method: 'PUT' });
 }
 
 document.getElementById("block-user").addEventListener('click', function () {
-    var addUserId = document.getElementById('identify').value;
-    var addUserStatus = document.getElementById('user-status').value;
-    blockUser({ id: addUserId, "status": addUserStatus });
-    location.reload();
+    var blockUserId = document.getElementById('identify').value;
+    blockUser(blockUserId).then(function () {
+        location.reload();
+    });
 });
 
 //GENERATE KEY
-function keyGenerator(data) {
-    var options = {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    };
-    return fetch(endpoints.users.url + '/' + data.id, options).then(function (response) {
-        return response.json;
-    });
+function keyGenerator(id) {
+    return fetch(endpoints.users.url + '/' + id + '/session', { method: 'PUT' });
 }
 
 document.getElementById("key-generator").addEventListener('click', function () {
-    var addUserId = document.getElementById('key-id').value;
-    keyGenerator({ id: addUserId, "userKey": Math.floor(Math.random() * 100000) });
-    location.reload();
+    var keyUserId = document.getElementById('key-id').value;
+    keyGenerator(keyUserId).then(function(response) {
+        if (response.status === 200) {
+            alert('Klucz został wygenerowany dla użytkownika o id=' + keyUserId);
+        } else {
+            alert('Podczas generowania klucza wystąpił błąd.');
+        }
+        
+    });
 });

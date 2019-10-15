@@ -1,35 +1,31 @@
 'use strict';
 
 //GET SINGLE PRODUCT
+
 var parts = document.URL.split('/');
 var activeID = Number(parts[parts.length - 1]);
 
-function createProductList() {
+function createProduct() {
     fetch(endpoints.products.url + '/' + activeID).then(function (response) {
         return response.json();
-    }).then(function (productsList) {
+    }).then(function (product) {
         var html = '';
-        html += '\n                <h2>' + productsList.name + '</h2>\n                <h5>' + productsList.price + '</h5>\n                <p>' + productsList.description + '</p>\n            ';
+        html += '\n                <h2>' + product.name + '</h2>';
+        html += '\n                <h5>' + product.price + '</h5>';
+        html += '\n                <p>' + product.description + '</p>';
+        html += '\n            ';
         $("#product").prepend(html);
 
         document.getElementById("add-cart-button").addEventListener('click', function () {
-            addCart(productsList);
+            addProductToCart(activeID);
             this.innerHTML = 'Produkt o id ' + activeID + ' znajduje si\u0119 w koszyku!';
         }, 1000);
     });
 }
-createProductList();
+
+createProduct();
 
 //ADD PRODUCT TO CART
-function addCart(data) {
-    var options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    };
-    return fetch(endpoints.cart.url, options).then(function (response) {
-        return response.json;
-    });
+function addProductToCart(productId) {
+    return fetch(endpoints.cart.url + '/1/products/' + productId, { method: 'PUT' });
 }

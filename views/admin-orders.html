@@ -49,8 +49,13 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Login</th>
-                <th scope="col">Produkty</th>
+                <th scope="col"># Kupującego</th>
+                <th scope="col"># Sprzedającego</th>
+                <th scope="col">Data zakupu</th>
+                <th scope="col"># Produktów</th>
+                <th scope="col">Status</th>
+                <th scope="col">Data dostawy</th>
+                <th scope="col">Wartość</th>
               </tr>
             </thead>
             <tbody id="orders"></tbody>
@@ -63,14 +68,30 @@
               <input id="edit-id" type="text" class="form-control">
             </div>
             <div class="form-group">
-              <label for="">login</label>
-              <input id="edit-name" type="text" class="form-control">
+              <label for="">id kupującego</label>
+              <input id="edit-buyer-id" type="text" class="form-control">
             </div>
             <div class="form-group">
-              <label for="">produkty</label>
-              <input id="edit-order-products" type="text" class="form-control">
+              <label for="">id sprzedającego</label>
+              <input id="edit-seller-id" type="text" class="form-control">
             </div>
-            <button id="edit-order" class="admin-action-button">Edytuj dane</button>
+            <div class="form-group">
+              <label for="">data zakupu</label>
+              <input id="edit-purchase-date" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">id produktów</label>
+              <input id="edit-order-product-ids" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">status</label>
+              <input id="edit-status" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">data dostawy</label>
+              <input id="edit-delivery-date" type="text" class="form-control">
+            </div>
+            <button id="edit-order" class="admin-action-button">Edytuj zamówienie</button>
           </div>
           <hr>
           <div class="action">
@@ -79,7 +100,7 @@
               <label for="">id</label>
               <input id="order-id" type="text" class="form-control">
             </div>
-            <button id="delete-order" class="admin-action-button">Usuń</button>
+            <button id="delete-order" class="admin-action-button">Usuń zamówienie</button>
           </div>
         </div>
       </div>
