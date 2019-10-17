@@ -49,39 +49,50 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col"># Kupującego</th>
-                <th scope="col"># Sprzedającego</th>
+                <th scope="col">Kupujący</th>
+                <th scope="col">Sprzedający</th>
                 <th scope="col">Data zakupu</th>
-                <th scope="col"># Produktów</th>
                 <th scope="col">Status</th>
                 <th scope="col">Data dostawy</th>
                 <th scope="col">Wartość</th>
+                <th scope="col">&nbsp;</th>
               </tr>
             </thead>
             <tbody id="orders"></tbody>
           </table>
+          <div id="div-products-list" hidden>
+            <hr>
+            <div class="action">
+              <p>Produkty z zamówienia nr <span id="list-order-id"></span></p>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Produkt</th>
+                  <th scope="col" class="center">Cena</th>
+                  <th scope="col" class="center">Grupa</th>
+                  <th scope="col">&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody id="products-list"></tbody>
+            </table>
+            <hr>
+            <div class="action">
+              <p>Dodaj produkt do zamówienia nr <span id="add-order-id"><span></p>
+              <div class="form-group">
+                <label for="">id produktu</label>
+                <input id="add-product-id" type="text" class="form-control">
+              </div>
+              <button id="add-product" class="admin-action-button">Dodaj produkt do zamówienia</button>
+            </div>
+          </div>          
           <hr>
           <div class="action">
             <p>Edytuj zamówienie</p>
             <div class="form-group">
               <label for="">id</label>
               <input id="edit-id" type="text" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="">id kupującego</label>
-              <input id="edit-buyer-id" type="text" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="">id sprzedającego</label>
-              <input id="edit-seller-id" type="text" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="">data zakupu</label>
-              <input id="edit-purchase-date" type="text" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="">id produktów</label>
-              <input id="edit-order-product-ids" type="text" class="form-control">
             </div>
             <div class="form-group">
               <label for="">status</label>
