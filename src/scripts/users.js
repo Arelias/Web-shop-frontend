@@ -12,6 +12,7 @@ function createUsersList() {
             html += '\n                        <td> ' + usersList[i].username + ' </td>';
             html += '\n                        <td> ' + usersList[i].userKey + ' </td>';
             html += '\n                        <td class="center"> ' + usersList[i].status + ' </td>';
+            html += '\n                        <td class="center"> ' + usersList[i].emailAddress + ' </td>';
             html += '\n                    </tr>';
             html += '\n                ';
         }
@@ -36,10 +37,12 @@ document.getElementById("add-user").addEventListener('click', function () {
     var addUserName = document.getElementById('name').value;
     var addUserStatus = document.getElementById('status').value;
     var addUserKey = document.getElementById('key').value;
+    var addUserEmail = document.getElementById('email').value;
     createUser({ 
         username: addUserName, 
         status: addUserStatus, 
-        userKey: addUserKey 
+        userKey: addUserKey,
+        emailAddress: addUserEmail
     }).then(function() {
         location.reload();
     });
